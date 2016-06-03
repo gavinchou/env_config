@@ -1,0 +1,29 @@
+PATH=~/bin:$PATH
+# PS1=\\u@\\h:\\W\\\$
+PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]\342\234\223\"; else echo \"\[\033[01;31m\]\342\234\227\"; fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\h'; fi)\[\033[01;34m\] \w \$\[\033[00m\] "
+PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]V\"; else echo \"\[\033[01;31m\]X\"; fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\H'; fi)\[\033[01;34m\] \w \$\[\033[00m\] "
+alias ls='ls -G'
+alias ll='ls -lG'
+alias la='ls -AlG'
+alias dir='ls -G'
+alias grep='grep --colour=auto'
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home
+export GOROOT=~/tools/go
+export GOPATH=$GOROOT:~/Documents/workspace/go/lib
+PATH=~/tools/go/bin:$PATH
+
+source ~/.git-completion.bash
+set completion-ignore-case on
+
+export M2_REPO=~/.m2/repository
+export M2_HOME=~/tools/maven/3.3.3
+
+HISTSIZE=50000
+ulimit -n 65535
+shopt -s histappend                      # append to history, don't overwrite it
+# history -c clears the history of the running session. This will reduce the
+# history counter by the amount of $HISTSIZE. history -r read the contents of
+# $HISTFILE and insert them in to the current running session history. this will
+# raise the history counter by the amount of lines in $HISTFILE.
+PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
