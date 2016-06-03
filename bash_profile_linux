@@ -1,0 +1,70 @@
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# Some example alias instructions
+# If these are enabled they will be used instead of any instructions
+# they may mask.  For example, alias rm='rm -i' will mask the rm
+# application.  To override the alias instruction use a \ before, ie
+# \rm will call the real rm not the alias.
+#
+# Interactive operation...
+# alias rm='rm -i'
+# alias cp='cp -i'
+# alias mv='mv -i'
+alias ls='ls --color --show-control-chars --time-style=long-iso'
+alias dir='ls --color=auto --format=vertical'
+alias vdir='ls --color=auto --format=long'
+alias ll='ls -l'                              # long list
+alias la='ls -al'                              # all but . and ..
+alias grep='grep --color=auto'
+alias df='df -h'
+alias du='du -h'
+
+## ==================== misc
+unset USERNAME
+
+export PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]V\"; else echo \"\[\033[01;31m\]X\"; fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\H'; fi)\[\033[01;34m\] \w \$\[\033[00m\] "
+
+# git auto completion file
+source ~/config/linux_config/git-completion.bash
+
+## ==================== path
+# basic path, tool chain
+
+PATH=/home/users/zhoufei05/.jumbo/opt/sun-java8/bin:/home/users/zhoufei05/.jumbo/bin/core_perl:/home/users/zhoufei05/.jumbo/bin:/home/tools/tools/svn/1.6.5/64/bin:/home/tools/tools/scmtools/usr/bin:/home/tools/tools/../bin/64/:/home/tools/tools/maven/apache-maven-2.2.0/bin:/home/tools/tools/ant/apache-ant-1.6.5/bin:/home/tools/tools/ant/apache-ant-1.7.1/bin:/home/tools/tools/php/5.2.17/64/bin:/home/users/zhoufei05/.jumbo/bin/vendor_perl:/home/users/zhoufei05/tools/hadoop/hadoop/bin:$PATH
+
+PATH=/home/users/zhoufei05/.jumbo/opt/coreutils/bin/:$PATH
+
+PATH=$HOME/bin:$PATH
+
+export PATH
+
+# User specific environment and startup programs
+# ccover
+# PATH=$HOME/app/ccover-8.9/bin:$PATH
+export COVBUILDZONE=`date +%s%N`
+
+# golang
+export GOROOT=~/tools/go
+if [ "x$GOPATH" == "x" ]; then
+  export GOPATH=~/dev/qns/pubsub:~/dev/qns/pubsub/lib
+else
+  export GOPATH=~/dev/qns/pubsub:~/dev/qns/pubsub/lib:$GOPATH
+fi
+
+export JAVA_HOME=/java/jdk1.6.0_06
+
+PATH=/home/users/zhoufei05/.BCloud/bin:$PATH
+export PATH
+
+# hosts
+export HOSTALIASES=$HOME/.hosts
+
+# python
+PYTHONIOENCODING=utf8
+
+# sudo v2
