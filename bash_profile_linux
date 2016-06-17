@@ -32,7 +32,7 @@ export PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]
 PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]V\"; else echo \"\[\033[01;31m\]X\"; fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\H'; fi)\[\033[01;34m\] \w \n\$\[\033[00m\] "
 
 # git auto completion file
-source ~/config/linux_config/git-completion.bash
+source ~/git-completion.bash
 
 ## ==================== path
 # basic path, tool chain
