@@ -19,7 +19,7 @@ mv git-completion.bash git-completion.bash.`digitaldatetime`2>/dev/null
 mv .gitconfig .gitconfig.`digitaldatetime`2>/dev/null
 
 ln -s ${env_config}/bash_profile_linux .bash_profile
-ln -s ${env_config}/bashr_linux .bashrc
+ln -s ${env_config}/bashrc_linux .bashrc
 ln -s ${env_config}/inputrc_linux .inputrc
 ln -s ${env_config}/git-completion.bash git-completion.bash
 ln -s ${env_config}/gitconfig .gitconfig
