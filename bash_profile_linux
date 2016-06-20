@@ -32,14 +32,14 @@ export PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]
 PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]V \[\033[00m\]\"\$(date '+%Y-%m-%d %H:%M:%S'); else echo \"\[\033[01;31m\]X \[\033[00m\]\"\$(date '+%Y-%m-%d %H:%M:%S'); fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\H'; fi)\[\033[01;34m\] \w \n\$\[\033[00m\] "
 
 # git auto completion file
-source ~/config/linux_config/git-completion.bash
+source ~/git-completion.bash
 
 ## ==================== path
 # basic path, tool chain
 
-PATH=/home/users/zhoufei05/.jumbo/opt/sun-java8/bin:/home/users/zhoufei05/.jumbo/bin/core_perl:/home/users/zhoufei05/.jumbo/bin:/home/tools/tools/svn/1.6.5/64/bin:/home/tools/tools/scmtools/usr/bin:/home/tools/tools/../bin/64/:/home/tools/tools/maven/apache-maven-2.2.0/bin:/home/tools/tools/ant/apache-ant-1.6.5/bin:/home/tools/tools/ant/apache-ant-1.7.1/bin:/home/tools/tools/php/5.2.17/64/bin:/home/users/zhoufei05/.jumbo/bin/vendor_perl:/home/users/zhoufei05/tools/hadoop/hadoop/bin:$PATH
+PATH=$HOME/.jumbo/opt/sun-java8/bin:$HOME/.jumbo/bin/core_perl:$HOME/.jumbo/bin:/home/tools/tools/svn/1.6.5/64/bin:/home/tools/tools/scmtools/usr/bin:/home/tools/tools/../bin/64/:/home/tools/tools/maven/apache-maven-2.2.0/bin:/home/tools/tools/ant/apache-ant-1.6.5/bin:/home/tools/tools/ant/apache-ant-1.7.1/bin:/home/tools/tools/php/5.2.17/64/bin:$HOME/.jumbo/bin/vendor_perl:$HOME/tools/hadoop/hadoop/bin:$PATH
 
-PATH=/home/users/zhoufei05/.jumbo/opt/coreutils/bin/:$PATH
+PATH=$HOME/.jumbo/opt/coreutils/bin/:$PATH
 
 PATH=$HOME/bin:$PATH
 
@@ -60,7 +60,7 @@ fi
 
 export JAVA_HOME=/java/jdk1.6.0_06
 
-PATH=/home/users/zhoufei05/.BCloud/bin:$PATH
+PATH=$PATH:$HOME/.BCloud/bin
 export PATH
 
 # hosts
