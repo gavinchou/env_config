@@ -1,7 +1,7 @@
 PATH=~/bin:$PATH
 # PS1=\\u@\\h:\\W\\\$
 PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]\342\234\223\"; else echo \"\[\033[01;31m\]\342\234\227\"; fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\h'; fi)\[\033[01;34m\] \w \$\[\033[00m\] "
-PS1="\n\$(echo 'last cmd finished at: '\$(date '+%Y-%m-%d %H:%M:%S'))\n\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]V\"; else echo \"\[\033[01;31m\]X\"; fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\H'; fi)\[\033[01;34m\] \w \n\$\[\033[00m\] "
+PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]V \[\033[00m\]\"\$(date '+%Y-%m-%d %H:%M:%S'); else echo \"\[\033[01;31m\]X \[\033[00m\]\"\$(date '+%Y-%m-%d %H:%M:%S'); fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\H'; fi)\[\033[01;34m\] \w \n\$\[\033[00m\] "
 alias ls='ls -G'
 alias ll='ls -lG'
 alias la='ls -AlG'
