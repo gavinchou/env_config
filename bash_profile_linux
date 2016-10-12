@@ -37,7 +37,7 @@ source ~/git-completion.bash
 ## ==================== path
 # basic path, tool chain
 
-PATH=$HOME/.jumbo/opt/sun-java8/bin:$HOME/.jumbo/bin/core_perl:$HOME/.jumbo/bin:/home/tools/tools/svn/1.6.5/64/bin:/home/tools/tools/scmtools/usr/bin:/home/tools/tools/../bin/64/:/home/tools/tools/maven/apache-maven-2.2.0/bin:/home/tools/tools/ant/apache-ant-1.6.5/bin:/home/tools/tools/ant/apache-ant-1.7.1/bin:/home/tools/tools/php/5.2.17/64/bin:$HOME/.jumbo/bin/vendor_perl:$HOME/tools/hadoop/hadoop/bin:$PATH
+PATH=$HOME/.jumbo/opt/sun-java7/bin:$HOME/.jumbo/bin/core_perl:$HOME/.jumbo/bin:/home/tools/tools/svn/1.6.5/64/bin:/home/tools/tools/scmtools/usr/bin:/home/tools/tools/../bin/64/:/home/tools/tools/maven/apache-maven-2.2.0/bin:/home/tools/tools/ant/apache-ant-1.6.5/bin:/home/tools/tools/ant/apache-ant-1.7.1/bin:/home/tools/tools/php/5.2.17/64/bin:$HOME/.jumbo/bin/vendor_perl:$HOME/tools/hadoop/hadoop/bin:$PATH
 
 PATH=$HOME/.jumbo/opt/coreutils/bin/:$PATH
 
@@ -58,7 +58,7 @@ else
   export GOPATH=~/dev/qns/pubsub:~/dev/qns/pubsub/lib:$GOPATH
 fi
 
-export JAVA_HOME=/java/jdk1.6.0_06
+# export JAVA_HOME=/java/jdk1.6.0_06
 
 PATH=$PATH:$HOME/.BCloud/bin
 export PATH
@@ -68,6 +68,10 @@ export HOSTALIASES=$HOME/.hosts
 
 # python
 PYTHONIOENCODING=utf8
+
+HISTSIZE=50000
+ulimit -n 65535
+shopt -s histappend               # append to history, don't overwrite it
 
 # sudo v2
 #
