@@ -42,7 +42,6 @@ PATH=$HOME/.jumbo/opt/sun-java7/bin:$HOME/.jumbo/bin/core_perl:$HOME/.jumbo/bin:
 PATH=$HOME/.jumbo/opt/coreutils/bin/:$PATH
 
 PATH=$HOME/bin:$PATH
-
 export PATH
 
 # User specific environment and startup programs
@@ -60,7 +59,8 @@ fi
 
 # export JAVA_HOME=/java/jdk1.6.0_06
 
-PATH=$PATH:$HOME/.BCloud/bin
+# bcloud
+PATH=$PATH:$HOME/.BCloud/bin:$HOME/.build_submitter/usr/bin
 export PATH
 
 # hosts
