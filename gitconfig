@@ -1,16 +1,19 @@
 # This is Git's per-user configuration file.
 [core]
-# Please adapt and uncomment the following lines:
-name = Gavin Chou
-email = gavin@macbookpro.local
+	# Please adapt and uncomment the following lines:
+	name = Gavin Chou
+	email = gavin@macbookpro.local
 [alias]
-lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-cm = commit
-co = checkout
-st = status
-info = remote show
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	cm = commit
+	co = checkout
+	st = status
+	info = remote show
 [user]
 	name = Gavin Chou
 	email = gavineaglechou@gmail.com
 [http]
   postBuffer = 524288000
+[credential]
+	helper = store --file ~/.git-credentials
+	helper = cache --timeout 10368000
