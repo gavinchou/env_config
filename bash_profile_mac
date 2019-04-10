@@ -6,7 +6,8 @@ alias ll='ls -lG'
 alias la='ls -AlG'
 alias dir='ls -G'
 alias grep='grep --colour=auto'
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home
+# use system's util to determin javahome
+export JAVA_HOME=`/usr/libexec/java_home`
 export GOROOT=~/tools/go
 export GOPATH=$GOROOT:~/Documents/workspace/go/lib
 PATH=~/tools/go/bin:$PATH
@@ -18,7 +19,7 @@ export M2_REPO=~/.m2/repository
 export M2_HOME=~/tools/maven/3.3.3
 
 HISTSIZE=50000
-ulimit -n 65535
+ulimit -n 65534
 shopt -s histappend                      # append to history, don't overwrite it
 # history -c clears the history of the running session. This will reduce the
 # history counter by the amount of $HISTSIZE. history -r read the contents of
@@ -27,9 +28,9 @@ shopt -s histappend                      # append to history, don't overwrite it
 PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 ## path
-### ruby
-PATH=~/app/ruby/bin:$PATH
-
+PATH=~/installed-from-src/latex/texlive/2018/bin/x86_64-darwin:$PATH
+## rust cargo
+PATH=~/installed-from-src/rust/bin:$PATH
 ### my bin
 PATH=~/bin:$PATH
 
