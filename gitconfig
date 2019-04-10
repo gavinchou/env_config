@@ -4,11 +4,13 @@
 	name = Gavin Chou
 	email = gavin@macbookpro.local
 	editor = vim
+	excludesfile = /Users/gavin/.gitignore_global
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	cm = commit
 	co = checkout
 	st = status
+	br = branch
 	info = remote show
 [user]
 	name = Gavin Chou
@@ -18,3 +20,16 @@
 [credential]
 	helper = store --file ~/.git-credentials
 	helper = cache --timeout 10368000
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /private/var/folders/lh/kb4l9hn91tq9_lppvp_95qpr0000gn/T/AppTranslocation/EE6B8017-4905-4236-9EA5-E9F455E34118/d/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/gavin/.stCommitMsg
