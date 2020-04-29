@@ -1,0 +1,4 @@
+# for mysql client
+# <https://dev.mysql.com/doc/refman/5.6/en/mysql-tips.html>
+bind "^W" ed-delete-prev-word
+bind "^U" vi-kill-line-prev
