@@ -1,6 +1,24 @@
+
+## prevent tmux from sourcing this file more than once
+# on OSX, before sourcing this profile, tmux uses /usr/libexec/path_helper to
+# generate a default PATH, which may reorder the PATH we set before
+# we have to force set PATH instead of skipping sourcing this file and source
+# it again
+if [ "$TMUX" != "" ]; then
+	# echo "new tmux window started, skip sourcing bash_profile"
+	# preset paths are defined in:
+	# /etc/paths stores preset PATH, /etc/manpaths stores preset MANPATH
+	# /etc/paths.d/ for user defined preset path
+	PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
+	# return
+fi
+
 # PS1=\\u@\\h:\\W\\\$
 PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]\342\234\223\"; else echo \"\[\033[01;31m\]\342\234\227\"; fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\h'; fi)\[\033[01;34m\] \w \$\[\033[00m\] "
 PS1="\[\033[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]V \[\033[00m\]\"\$(date '+%Y-%m-%d %H:%M:%S'); else echo \"\[\033[01;31m\]X \[\033[00m\]\"\$(date '+%Y-%m-%d %H:%M:%S'); fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\H'; fi)\[\033[01;34m\] \w \n\$\[\033[00m\] "
+
+# check manuals of ls and find CLICOLOR for more help
+export LSCOLORS='Exfxcxdxbxegedabagacad'
 alias ls='ls -G'
 alias ll='ls -lG'
 alias la='ls -AlG'
@@ -17,10 +35,13 @@ set completion-ignore-case on
 
 export M2_REPO=~/.m2/repository
 export M2_HOME=~/tools/maven/3.3.3
+# for autotools,autoconf macros
+export ACLOCAL_PATH=$HOME/installed-from-src/libtool/current-version/share/aclocal/:$HOME/installed-from-src/pkg-config/current-version/share/aclocal
 
 HISTSIZE=50000
-ulimit -n 65534
-shopt -s histappend                      # append to history, don't overwrite it
+# ulimit -n 65534
+# append to history, don't overwrite it
+shopt -s histappend
 # history -c clears the history of the running session. This will reduce the
 # history counter by the amount of $HISTSIZE. history -r read the contents of
 # $HISTFILE and insert them in to the current running session history. this will
@@ -28,10 +49,21 @@ shopt -s histappend                      # append to history, don't overwrite it
 PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 ## path
-PATH=~/installed-from-src/latex/texlive/2018/bin/x86_64-darwin:$PATH
-## rust cargo
-PATH=~/installed-from-src/rust/bin:$PATH
+### latex
+PATH=$HOME/installed-from-src/latex/texlive/2018/bin/x86_64-darwin:$PATH
+### rust and cargo
+export CARGO_HOME=$HOME/installed-from-src/rust
+export RUSTUP_HOME=$CARGO_HOME
+PATH=$CARGO_HOME/bin:$PATH
+### ruby
+export GEM_HOME=$HOME/installed-from-src/ruby/gems
+PATH=$GEM_HOME/bin:$PATH
+PATH=~/installed-from-src/ruby/current-version/bin:$PATH
 ### my bin
 PATH=~/bin:$PATH
 
+## focus issue for iterm2: ^[[O^[[I
+alias focusfix='printf "\e[?1004l"'
+
+export PATH
 # vim: ft=sh tw=1000:
