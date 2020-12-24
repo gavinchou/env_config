@@ -1,0 +1,80 @@
+# .zshrc
+
+# Some example alias instructions
+# If these are enabled they will be used instead of any instructions
+# they may mask.  For example, alias rm='rm -i' will mask the rm
+# application.  To override the alias instruction use a \ before, ie
+# \rm will call the real rm not the alias.
+#
+# Interactive operation...
+# alias rm='rm -i'
+# alias cp='cp -i'
+# alias mv='mv -i'
+alias ls='ls --color --show-control-chars --time-style=long-iso'
+alias dir='ls --color=auto --format=vertical'
+alias vdir='ls --color=auto --format=long'
+alias ll='ls -l'                              # long list
+alias la='ls -al'                              # all but . and ..
+alias grep='grep --color=auto'
+alias df='df -h'
+alias du='du -h'
+alias tmux='tmux -u'
+
+PROMPT='%(?.0 %F{green}%B√.%F{red}%? x)%b%f %D{20%y-%m-%d %H:%M:%S} %F{green}%B%n@%M%b%f %F{063}%B%10~
+$%b%f '
+
+export TERM=xterm-256color
+
+# repeat prompt for time measuing
+repeat-last-prompt-accept-line() {
+    echo "`date +"%Y-%m-%d %H:%M:%S"`\t${PWD}\t${BUFFER}" >> ~/.zsh_history
+    echo ""
+    zle reset-prompt
+    zle accept-line
+}
+zle -N repeat-last-prompt-accept-line
+bindkey "^M" repeat-last-prompt-accept-line
+
+## ==================== misc
+unset USERNAME
+
+## auto completion file name ignore case
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+
+
+## ========= prevent tmux from sourcing this file more than once
+if [ "$TMUX" != "" ]; then
+	echo "new tmux window started, skip sourcing bash_profile"
+	return
+fi
+
+## ==================== path
+PATH=$HOME/.jumbo/opt/sun-java7/bin:$HOME/.jumbo/bin/core_perl:$HOME/.jumbo/bin:/home/tools/tools/svn/1.6.5/64/bin:/home/tools/tools/scmtools/usr/bin:/home/tools/tools/../bin/64/:/home/tools/tools/maven/apache-maven-2.2.0/bin:/home/tools/tools/ant/apache-ant-1.6.5/bin:/home/tools/tools/ant/apache-ant-1.7.1/bin:/home/tools/tools/php/5.2.17/64/bin:$HOME/.jumbo/bin/vendor_perl:$HOME/tools/hadoop/hadoop/bin:$PATH
+
+PATH=$HOME/.jumbo/opt/coreutils/bin/:$PATH
+
+PATH=$HOME/bin:$PATH
+export PATH
+
+# User specific environment and startup programs
+# ccover
+# PATH=$HOME/app/ccover-8.9/bin:$PATH
+export COVBUILDZONE=`date +%s%N`
+
+# bcloud
+PATH=$PATH:$HOME/.BCloud/bin:$HOME/.build_submitter/usr/bin
+export PATH
+
+# hosts
+export HOSTALIASES=$HOME/.hosts
+
+# python
+PYTHONIOENCODING=utf8
+
+ulimit -n 65535
+
+export TMOUT=0
+export PATH
+
+# vim: ft=sh et:
