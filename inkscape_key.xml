@@ -40,12 +40,13 @@ on Unix). The bindings in that personal file are added to (or, if there's a conf
 override) the bindings in the main default.xml.
 -->
 
+<!-- key binding search: /"${key}.*\(\(primary\)\|\(ctrl\)\)\(,shift\)\?\(,alt\)\? -->
 
 <!-- File -->
 
   <bind key="n" modifiers="Ctrl" action="FileNew" display="true" />
 
-  <bind key="n" modifiers="Ctrl,Alt" action="FileTemplates" display="true" />
+<!--   <bind key="n" modifiers="Ctrl,Alt" action="FileTemplates" display="true" /> -->
 
   <bind key="o" modifiers="Ctrl" action="FileOpen" display="true" />
 
@@ -78,7 +79,7 @@ override) the bindings in the main default.xml.
 
 <!-- Tools -->
 
-  <bind key="F1" action="ToolSelector" />
+  <!-- <bind key="F1" action="ToolSelector" /> -->
   <bind key="s" action="ToolSelector" display="true" />
 
   <bind action="SelectPrefs" />
@@ -521,11 +522,14 @@ override) the bindings in the main default.xml.
 <!-- Layers -->
 
   <bind key="n" modifiers="Ctrl,Shift" action="LayerNew" />
+  <bind key="n" modifiers="Ctrl,Alt" action="LayerNew" />
 
   <bind action="LayerRename" />
   <bind key="Page_Up" modifiers="Ctrl" action="LayerNext" display="true" />
+  <bind key="Page_Up" modifiers="Ctrl,Alt" action="LayerNext" display="true" />
   <bind key="KP_Page_Up" modifiers="Ctrl" action="LayerNext" />
   <bind key="Page_Down" modifiers="Ctrl" action="LayerPrev" display="true" />
+  <bind key="Page_Down" modifiers="Ctrl,Alt" action="LayerPrev" display="true" />
   <bind key="KP_Page_Down" modifiers="Ctrl" action="LayerPrev" />
   <bind action="LayerDelete" />
 
@@ -556,14 +560,16 @@ override) the bindings in the main default.xml.
 
   <bind action="LayerHideAll" />
   <bind action="LayerSolo" />
+  <!-- there may be performance issue -->
+  <!-- <bind key="s" modifiers="Ctrl,Alt" action="LayerSolo" display="true" /> -->
   <bind action="LayerShowAll" />
 
   <bind action="LayerLockAll" />
   <bind action="LayerLockOthers" />
   <bind action="LayerUnlockAll" />
 
-  <bind action="LayerToggleHide" />
-  <bind action="LayerToggleLock" />
+  <bind key="s" modifiers="Ctrl,Alt" action="LayerToggleHide" display="true" />
+  <bind key="d" modifiers="Ctrl,Alt" action="LayerToggleLock" display="true" />
 
 <!-- Dialogs -->
 
@@ -609,6 +615,7 @@ override) the bindings in the main default.xml.
   <bind action="DialogInput" />
 
   <bind key="F12" action="DialogsToggle" display="true" />
+  <bind key="F1" action="DialogsToggle" display="true" />
 
   <bind key="h" modifiers="Ctrl,Alt" action="AlignHorizontalCenter" display="true" />
   <bind key="H" modifiers="Ctrl,Alt" action="AlignHorizontalCenter" />
