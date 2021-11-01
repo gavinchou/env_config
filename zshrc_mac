@@ -15,7 +15,7 @@ alias grep='grep --colour=auto'
 
 export TERM=xterm-256color
 
-# repeat prompt for time measuing
+# repeat prompt for time measuing, and record in self-defined history file
 repeat-last-prompt-accept-line() {
     echo "`date +"%Y-%m-%d %H:%M:%S"`\t${PWD}\t${BUFFER}" >> ~/.zsh_history
     echo ""
@@ -42,6 +42,11 @@ if [ "$TMUX" != "" ]; then
 	PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 	# return
 fi
+
+## history
+HISTSIZE=5000 # session history size
+SAVEHIST=1000 # saved history
+HISTFILE=~/.zshistory # history file
 
 ## path
 ## use system's util to determin javahome
