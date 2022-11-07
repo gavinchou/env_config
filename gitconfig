@@ -2,7 +2,7 @@
 [core]
 	# Please adapt and uncomment the following lines:
 	name = Gavin Chou
-	email = gavin@macbookpro.local
+	email = gavin@macbookair.local
 	editor = vim
 	excludesfile = /Users/gavin/.gitignore_global
 
@@ -14,6 +14,7 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	cm = commit
 	co = checkout
+	cp = cherry-pick
 	st = status
 	br = branch
 	info = remote show
@@ -30,11 +31,9 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /private/var/folders/lh/kb4l9hn91tq9_lppvp_95qpr0000gn/T/AppTranslocation/F6990444-0B69-4EED-B693-DB9B3129FECB/d/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [commit]
 	template = /Users/gavin/.stCommitMsg
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
