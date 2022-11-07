@@ -161,6 +161,18 @@ under the License.
 			<url>http://my.repository.com/repo/path</url>
 		</mirror>
 		 -->
+    <mirror>
+      <id>alimaven</id>
+      <name>aliyun maven</name>
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+      <mirrorOf>central</mirrorOf>        
+    </mirror>
+<!-- 		<mirror> -->
+<!-- 				<id>nexus-163</id> -->
+<!-- 				<mirrorOf>*</mirrorOf> -->
+<!-- 				<name>Nexus 163</name> -->
+<!-- 				<url>http://mirrors.163.com/maven/repository/maven-public/</url> -->
+<!-- 		</mirror> -->
 	</mirrors>
 
 	<!-- profiles
@@ -272,7 +284,8 @@ under the License.
 					<name>Repository</name>
 					<url>http://repo.maven.apache.org/maven2</url>
 					<layout>default</layout>
-					<snapshotPolicy>always</snapshotPolicy>
+						<enabled>true</enabled>
+						<updatePolicy>daily</updatePolicy>
 				</repository>
 			</repositories>
 
@@ -281,16 +294,17 @@ under the License.
 							<id>central</id>
 							<url>http://repo1.maven.org/maven2</url>
 							<snapshots>
-									<enabled>false</enabled>
+								<enabled>true</enabled>
+								<updatePolicy>daily</updatePolicy>
 							</snapshots>
 					</pluginRepository>
 			</pluginRepositories>
 		</profile>
 
 
-	<activeProfiles>
-		<activeProfile>dev</activeProfile>
-	</activeProfiles>
+<!-- 	<activeProfiles> -->
+<!-- 		<activeProfile>dev</activeProfile> -->
+<!-- 	</activeProfiles> -->
 
 	</profiles>
 
