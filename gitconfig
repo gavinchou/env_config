@@ -31,8 +31,8 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[commit]
-	template = /Users/gavin/.stCommitMsg
+# [commit]
+# 	template = /Users/gavin/.stCommitMsg
 [diff]
 	tool = vimdiff
 [difftool]
