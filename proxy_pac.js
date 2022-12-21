@@ -4,6 +4,10 @@
 var proxy = "SOCKS5 127.0.0.1:1086; SOCKS 127.0.0.1:1086; DIRECT;";
 
 var rules = [
+  "\/^https?:\\\/\\\/([^\\\/]+\\.)*wikitionary\\.org\\\/.*\/",
+  "\/^https?:\\\/\\\/([^\\\/]+\\.)*wikipedia\\.org\\\/.*\/",
+  "\/^https?:\\\/\\\/([^\\\/]+\\.)*stackoverflow\\.com\\\/.*\/",
+  "\/^https?:\\\/\\\/([^\\\/]+\\.)*stackexchange\\.com\\\/.*\/",
   "\/^https?:\\\/\\\/([^\\\/]+\\.)*tweeter\\.com\\\/.*\/",
   "\/^https?:\\\/\\\/([^\\\/]+\\.)*facebook\\.com\\\/.*\/",
   "\/^https?:\\\/\\\/([^\\\/]+\\.)*youtube\\.com\\\/.*\/",
