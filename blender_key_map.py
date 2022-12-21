@@ -734,14 +734,14 @@ keyconfig_data = \
       },
      ),
     ("view3d.zoom",
-     {"type": 'WHEELINMOUSE', "value": 'PRESS', "ctrl": True},
+     {"type": 'WHEELUPMOUSE', "value": 'PRESS', "ctrl": True},
      {"properties":
       [("delta", 1),
        ],
       },
      ),
     ("view3d.zoom",
-     {"type": 'WHEELOUTMOUSE', "value": 'PRESS', "ctrl": True},
+     {"type": 'WHEELDOWNMOUSE', "value": 'PRESS', "ctrl": True},
      {"properties":
       [("delta", -1),
        ],
