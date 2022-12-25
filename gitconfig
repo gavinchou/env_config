@@ -4,7 +4,7 @@
 	name = Gavin Chou
 	email = gavin@macbookair.local
 	editor = vim
-	excludesfile = /Users/gavin/.gitignore_global
+	excludesfile = ~/.gitignore_global
 
 	# for UTF-8 file names
 	precomposeunicode = true
@@ -17,7 +17,7 @@
 	cp = cherry-pick
 	st = status
 	br = branch
-	info = remote show
+	rs = remote show
 [user]
 	name = Gavin Chou
 	email = gavineaglechou@gmail.com
@@ -26,14 +26,13 @@
 [credential]
 	helper = store --file ~/.git-credentials
 	helper = cache --timeout 10368000
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
 # [commit]
-# 	template = /Users/gavin/.stCommitMsg
+# 	template = ~/.stCommitMsg
 [diff]
 	tool = vimdiff
 [difftool]
 	prompt = false
+[merge]
+	tool = vimdiff
+[mergetool "vimdiff"]
+	layout = LOCAL,BASE,REMOTE/MERGED + LOCAL,REMOTE/MERGED + (LOCAL/BASE/REMOTE),MERGED
