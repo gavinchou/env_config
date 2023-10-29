@@ -10,6 +10,13 @@
 	precomposeunicode = true
 	quotepath = false
 
+	# Preserve the default pager behavior in case $LESS is set by user
+	# https://unix.stackexchange.com/questions/469360/less-performs-differently-when-invoked-from-bash-and-from-git
+	# https://stackoverflow.com/questions/48511931/how-do-i-pass-options-to-less-from-git-diff
+	# https://www.git-scm.com/docs/git-config#git-config-corepager
+	# When the LESS environment variable is unset, Git sets it to FRX (if LESS environment variable is set, Git does not change it at all).
+	pager = "less -FXR"
+
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	cm = commit
@@ -31,7 +38,7 @@
 [diff]
 	tool = vimdiff
 [difftool]
-	prompt = false
+	prompt = true
 [merge]
 	tool = vimdiff
 [mergetool "vimdiff"]
