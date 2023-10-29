@@ -19,6 +19,7 @@ mv .inputrc .inputrc.$(digitaldatetime) 2>/dev/null
 mv .gitconfig .gitconfig.$(digitaldatetime) 2>/dev/null
 mv .tmux.conf .tmux.conf.$(digitaldatetime) 2>/dev/null
 mv .zshrc .zshrc.$(digitaldatetime) 2>/dev/null
+mv .editrc .editrc.$(digitaldatetime) 2>/dev/null
 
 # ln -s ${env_config}/bash_profile_linux .bash_profile
 # ln -s ${env_config}/bashrc_linux .bashrc
@@ -27,5 +28,6 @@ ln -s ${env_config}/inputrc_linux .inputrc
 ln -s ${env_config}/gitconfig .gitconfig
 ln -s ${env_config}/tmux.conf .tmux.conf
 ln -s ${env_config}/zshrc_linux .zshrc
+ln -s ${env_config}/editrc .editrc
 
 echo "enjoy!"
