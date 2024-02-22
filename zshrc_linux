@@ -67,4 +67,7 @@ export MANPATH
 # hosts
 export HOSTALIASES=$HOME/.hosts
 
+# less, default config
+export LESS="-i -R"
+
 # vim: ft=sh et:

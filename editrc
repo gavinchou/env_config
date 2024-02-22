@@ -2,3 +2,7 @@
 # <https://dev.mysql.com/doc/refman/5.6/en/mysql-tips.html>
 bind "^W" ed-delete-prev-word
 bind "^U" vi-kill-line-prev
+#bind "OF" ed-move-to-end # some problem with shift+insert
+#bind "OH" ed-move-to-beg
+#bind "[C" ed-next-char
+#bind "[D" ed-prev-char

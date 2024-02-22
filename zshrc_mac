@@ -17,7 +17,7 @@ export TERM=xterm-256color
 
 # repeat prompt for time measuing, and record in self-defined history file
 repeat-last-prompt-accept-line() {
-    echo "`date +"%Y-%m-%d %H:%M:%S"`\t${PWD}\t${BUFFER}" >> ~/.zsh_history
+    echo "`date +"%Y-%m-%d %H:%M:%S"`\t${PWD}\t${BUFFER}" >> ~/.my_zsh_history
     echo ""
     zle reset-prompt
     zle accept-line
@@ -44,14 +44,15 @@ if [ "$TMUX" != "" ]; then
 fi
 
 ## history
-HISTSIZE=5000 # session history size
-SAVEHIST=1000 # saved history
-HISTFILE=~/.zshistory # history file
+# HISTSIZE=5000 # session history size
+# SAVEHIST=1000 # saved history
+# HISTFILE=~/.zshistory # history file
 
 ## path
 ## use system's util to determin javahome
-export JAVA_HOME=`/usr/libexec/java_home`
-export GOROOT=~/opt/go/go-1.18
+# export JAVA_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME=$HOME/opt/jdk/jdk8
+export GOROOT=$HOME/opt/go/go-1.18
 export GOPATH=$GOROOT:~/Documents/workspace/go/lib
 PATH=$HOME/go/go-1.18/bin:$PATH
 
@@ -71,7 +72,7 @@ export GEM_HOME=$HOME/installed-from-src/ruby/gems
 PATH=$GEM_HOME/bin:$PATH
 PATH=~/installed-from-src/ruby/current-version/bin:$PATH
 ### my bin
-PATH=~/bin:$PATH
+PATH=$HOME/bin:$PATH
 
 ## focus issue for iterm2: ^[[O^[[I
 alias focusfix='printf "\e[?1004l"'
@@ -84,6 +85,12 @@ LC_MONETARY="en_US.UTF-8"
 LC_NUMERIC="en_US.UTF-8"
 LC_TIME="en_US.UTF-8"
 LC_ALL="en_US.UTF-8"
+
+# custom completion
+source $HOME/config/env_config/zsh/completion.zsh
+
+# less, default config
+export LESS="-i -R"
 
 export PATH
 # vim: ft=sh tw=1000:
