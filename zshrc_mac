@@ -1,9 +1,58 @@
 
-# PROMPT='%(?.0 %F{green}%B√.%F{red}x%?)%b%f 20%D %T %F{green}%B%n@%M%b%f %F{063}%B%10~ 
+################################################################################
+## begin of prompt
+################################################################################
+
+# bak
+# PROMPT='%(?.0 %F{green}%B√.%F{red}%? x)%b%f %D{20%y-%m-%d %H:%M:%S} %F{green}%B%n@%M%b%f %F{063}%B%10~ 
 # $%b%f '
 
-PROMPT='%(?.0 %F{green}%B√.%F{red}%? x)%b%f %D{20%y-%m-%d %H:%M:%S} %F{green}%B%n@%M%b%f %F{063}%B%10~ 
+# break down into parts
+prompt1='%(?.0 %F{green}%B√.%F{red}%? x)%b%f %D{20%y-%m-%d %H:%M:%S} '
+prompt2='%F{green}%B%n@%M%b%f %F{063}%B%10~ 
 $%b%f '
+
+# hook, pre command execution
+function preexec {
+  # timer=${timer:-$SECONDS} # SECONDS is built in zsh but not precise enough
+  # timer=$(($(date +%s%0N)/1000000)) # gnu date
+  timer=$(perl -MTime::HiRes=time -e 'printf "%.0f\n", time*1000')
+}
+
+# hook, before next command
+function precmd {
+  if [[ -n ${timer} ]]; then
+    # now=$(($(date +%s%0N)/1000000)) # gnu date
+    now=$(perl -MTime::HiRes=time -e 'printf "%.0f\n", time*1000')
+    elapsed=$((${now}-${timer}))
+    unset timer
+    if [[ ${elapsed} -gt 0 ]]; then
+      # RPROMT is the prompt from RIGHT, we can also use it
+      # RPROMPT="${elapsed} ms" 
+      PROMPT="${prompt1}${elapsed}ms ${prompt2}"
+    else
+      PROMPT="${prompt1}${prompt2}"
+    fi
+  fi
+}
+
+PROMPT="${prompt1}${prompt2}"
+
+# repeat prompt for time measuing, and record in self-defined history file
+repeat-last-prompt-accept-line() {
+  # record history
+  echo "`date +"%Y-%m-%d %H:%M:%S"`\t${PWD}\t${BUFFER}" >> ~/.my_zsh_history
+  echo ""
+  PROMPT="${prompt1}${prompt2}"
+  zle reset-prompt
+  zle accept-line
+}
+zle -N repeat-last-prompt-accept-line
+bindkey "^M" repeat-last-prompt-accept-line
+
+################################################################################
+## end of prompt
+################################################################################
 
 # check manuals of ls and find CLICOLOR for more help
 export LSCOLORS='Exfxcxdxbxegedabagacad'
@@ -14,16 +63,6 @@ alias dir='ls -G'
 alias grep='grep --colour=auto'
 
 export TERM=xterm-256color
-
-# repeat prompt for time measuing, and record in self-defined history file
-repeat-last-prompt-accept-line() {
-    echo "`date +"%Y-%m-%d %H:%M:%S"`\t${PWD}\t${BUFFER}" >> ~/.my_zsh_history
-    echo ""
-    zle reset-prompt
-    zle accept-line
-}
-zle -N repeat-last-prompt-accept-line
-bindkey "^M" repeat-last-prompt-accept-line
 
 ## auto completion file name ignore case
 autoload -Uz compinit && compinit
@@ -91,6 +130,9 @@ source $HOME/config/env_config/zsh/completion.zsh
 
 # less, default config
 export LESS="-i -R"
+
+# editor for crontab etc.
+export EDITOR=$HOME/bin/vim
 
 export PATH
 # vim: ft=sh tw=1000:
