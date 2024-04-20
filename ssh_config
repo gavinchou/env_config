@@ -1,0 +1,8 @@
+# ~/.ssh/config
+
+TCPKeepAlive yes
+ServerAliveInterval 30
+StrictHostKeyChecking no
+# -X
+# -o 
+# -X -o TCPKeepAlive=yes -o ServerAliveCountMax=20 -o ServerAliveInterval=15 -o 
