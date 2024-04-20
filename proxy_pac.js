@@ -32,6 +32,7 @@ var proxy_rules = [
   ".*tweeter.*",
   ".*facebook.*",
   ".*youtube.*",
+  ".*youtu.be.*",
   ".*google.*",
   ".*amazon.*",
   ".*github.*",
@@ -53,6 +54,8 @@ var proxy_rules = [
   ".*terraform.*",
   ".*chrome.*",
   ".*reddit.*",
+  ".*openai.com.*",
+  ".*grammarly.*",
 ];
 
 function matchAnyProxyRules(url, host) {
