@@ -1,0 +1,20 @@
+{
+"to show all commands":"type Object.keys(app.commands.commands) in dev tools",
+
+"ctrl-alt-l":"alignment:align-left",
+"ctrl-alt-r":"alignment:align-right",
+"ctrl-alt-c":"alignment:align-center",
+"ctrl-alt-t":"alignment:align-top",
+"ctrl-alt-b":"alignment:align-bottom",
+"ctrl-alt-m":"alignment:align-middle",
+"ctrl-alt-shift-h":"alignment:space-equally-horizontally",
+"ctrl-alt-shift-v":"alignment:space-equally-vertically",
+"ctrl-alt-w":"alignment:set-width-equally",
+"ctrl-alt-h":"alignment:set-height-equally",
+"ctrl-alt-s":"alignment:set-size-equally",
+"pageup":"alignment:send-to-back",
+"pagedown":"alignment:bring-to-front",
+
+"ctrl-r":"debug:reload",
+"f12":"debug:show-devtools"
+}
