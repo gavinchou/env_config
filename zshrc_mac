@@ -1,4 +1,9 @@
 
+
+# restore key binding, some times it is change by some other process
+# https://stackoverflow.com/questions/23128353/zsh-shortcut-ctrl-a-not-working
+bindkey -e
+
 ################################################################################
 ## begin of prompt
 ################################################################################
@@ -29,7 +34,16 @@ function precmd {
     if [[ ${elapsed} -gt 0 ]]; then
       # RPROMT is the prompt from RIGHT, we can also use it
       # RPROMPT="${elapsed} ms" 
-      PROMPT="${prompt1}${elapsed}ms ${prompt2}"
+      h=$((${elapsed} / 3600000))
+      m=$((${elapsed} / 60000 % 60))
+      s=$((${elapsed} / 1000 % 60))
+      ms=$((${elapsed} % 1000))
+      elapsed=""
+      ((h > 0)) && elapsed="${elapsed}${h}h"
+      ((m > 0 || h > 0)) && elapsed="${elapsed}${m}m"
+      ((s > 0 || h > 0 || m > 0)) && elapsed="${elapsed}${s}s"
+      ((ms > 0 && h < 1 && m < 1 && s < 30)) && elapsed="${elapsed}${ms}ms"
+      PROMPT="${prompt1}${elapsed} ${prompt2}"
     else
       PROMPT="${prompt1}${prompt2}"
     fi
@@ -103,7 +117,7 @@ export ACLOCAL_PATH=$HOME/installed-from-src/libtool/current-version/share/acloc
 ### latex
 PATH=$HOME/installed-from-src/latex/texlive/2018/bin/x86_64-darwin:$PATH
 ### rust and cargo
-export CARGO_HOME=$HOME/installed-from-src/rust
+export CARGO_HOME=$HOME/opt/rust
 export RUSTUP_HOME=$CARGO_HOME
 PATH=$CARGO_HOME/bin:$PATH
 ### ruby
