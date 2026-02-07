@@ -123,4 +123,7 @@ export HOSTALIASES=$HOME/.hosts
 # less, default config
 export LESS="-i -R"
 
+# custom completion
+source $HOME/config/env_config/zsh/completion.zsh
+
 # vim: ft=sh et:
