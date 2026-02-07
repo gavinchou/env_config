@@ -43,6 +43,11 @@ var proxy_rules = [
   "(https|http)://[^/]*huggingface[^/]*",
   "(https|http)://[^/]*bloomberg[^/]*",
   "(https|http)://x.com.*",
+  "(https|http)://[^/]*jetbrains[^/]*",
+  "(https|http)://[^/]*kubernetes[^/]*",
+  "(https|http)://[^/]*claude[^/]*",
+  "(https|http)://[^/]*anthropic[^/]*",
+//   "(https|http)://[^/]*ipinfo.io[^/]*",
 ];
 
 function matchAnyProxyRules(url, host) {

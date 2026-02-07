@@ -1,2 +1,5 @@
 set clipboard+=unnamedplus
 set ignorecase
+" nmap <C-o> :action Back<CR>
+" nmap <C-o>      <Action>(Back)
+" nmap <C-i>      <Action>(Forward)

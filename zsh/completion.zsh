@@ -23,5 +23,7 @@ esac
 compdef _feishu fs
 compdef _feishu feishu.sh
 compdef _feishu feishu
+compdef _feishu lk
+compdef _feishu lark
 
 # vim: et ts=2 sw=2 tw=10086 ft=sh:

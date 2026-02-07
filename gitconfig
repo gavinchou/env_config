@@ -18,12 +18,14 @@
 	pager = "less -FXR"
 
 [alias]
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	# lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cs) %C(bold blue)<%an>%Creset' --abbrev-commit
+# 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) xxxyyyzzz%an <%ae>xxxyyyzzz%Creset' --abbrev-commit
 	cm = commit
 	co = checkout
 	cp = cherry-pick
 	st = status
-	br = branch
+	br = branch --sort=-committerdate
 	rs = remote show
 [user]
 	name = Gavin Chou
@@ -37,6 +39,7 @@
 # 	template = ~/.stCommitMsg
 [diff]
 	tool = vimdiff
+	renameLimit = 100000
 [difftool]
 	prompt = true
 [merge]
