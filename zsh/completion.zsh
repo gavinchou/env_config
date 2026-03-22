@@ -76,6 +76,7 @@ _claude() {
   )
 
   _arguments -C -s \
+    "-m[Select model provider]:model:->model_provider" \
     "(-h --help)"{-h,--help}"[Display help for command]" \
     "(-v --version)"{-v,--version}"[Output the version number]" \
     "(-c --continue)"{-c,--continue}"[Continue the most recent conversation]" \
@@ -125,6 +126,9 @@ _claude() {
     && return 0
 
   case $state in
+    model_provider)
+      compadd "$@" glm qwen kimi minimax ds deepseek claude
+      ;;
     model)
       compadd "$@" sonnet opus haiku
       ;;
@@ -146,5 +150,6 @@ _claude() {
   esac
 }
 compdef _claude claude
+
 
 # vim: et ts=2 sw=2 tw=10086 ft=sh:
