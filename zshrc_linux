@@ -95,26 +95,29 @@ unset USERNAME
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 
+## ==================== helper function
+# add path only if not already in PATH
+add_to_path() {
+	case ":$PATH:" in
+		*":$1:"*) : ;;
+		*) PATH="$1:$PATH" ;;
+	esac
+}
+
 export HISTSIZE=10000
 
 # python
-PYTHONIOENCODING=utf8
+PYTHONIOENCODING=utf-8
 
 ulimit -n 65535
 
 export TMOUT=0
 
-## ========= prevent tmux from sourcing this file more than once
-if [ "$TMUX" != "" ]; then
-	echo "new tmux window started, skip sourcing bash_profile"
-	return
-fi
-
 ## ==================== path
-PATH=$HOME/bin:$PATH
+add_to_path "$HOME/bin"
 export PATH
 
-MANPATH=$HOME/opt/*/*/*/man:`manpath`
+MANPATH=$HOME/opt/*/*/*/man:$(manpath)
 export MANPATH
 
 # hosts

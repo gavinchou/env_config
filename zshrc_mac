@@ -82,19 +82,15 @@ export TERM=xterm-256color
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 
-## prevent tmux from sourcing this file more than once
-# on OSX, before sourcing this profile, tmux uses /usr/libexec/path_helper to
-# generate a default PATH, which may reorder the PATH we set before
-# we have to force set PATH instead of skipping sourcing this file and source
-# it again
-if [ "$TMUX" != "" ]; then
-	# echo "new tmux window started, skip sourcing bash_profile"
-	# preset paths are defined in:
-	# /etc/paths stores preset PATH, /etc/manpaths stores preset MANPATH
-	# /etc/paths.d/ for user defined preset path
-	PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
-	# return
-fi
+export https_proxy=http://127.0.0.1:1087 http_proxy=http://127.0.0.1:1087 all_proxy=socks5://127.0.0.1:1086
+
+# helper function: add path only if not already in PATH
+add_to_path() {
+	case ":$PATH:" in
+		*":$1:"*) : ;;
+		*) PATH="$1:$PATH" ;;
+	esac
+}
 
 ## history
 # HISTSIZE=5000 # session history size
@@ -102,30 +98,26 @@ fi
 # HISTFILE=~/.zshistory # history file
 
 ## path
-## use system's util to determin javahome
-# export JAVA_HOME=$(/usr/libexec/java_home)
 export JAVA_HOME=$HOME/opt/jdk/jdk8
 export GOROOT=$HOME/opt/go/go-1.18
 export GOPATH=$GOROOT:~/Documents/workspace/go/lib
-PATH=$HOME/go/go-1.18/bin:$PATH
 
 export M2_REPO=~/.m2/repository
 export M2_HOME=~/tools/maven/3.3.3
+export CARGO_HOME=$HOME/opt/rust
+export RUSTUP_HOME=$CARGO_HOME
+export GEM_HOME=$HOME/installed-from-src/ruby/gems
+
 # for autotools,autoconf macros
 export ACLOCAL_PATH=$HOME/installed-from-src/libtool/current-version/share/aclocal/:$HOME/installed-from-src/pkg-config/current-version/share/aclocal
 
-### latex
-PATH=$HOME/installed-from-src/latex/texlive/2018/bin/x86_64-darwin:$PATH
-### rust and cargo
-export CARGO_HOME=$HOME/opt/rust
-export RUSTUP_HOME=$CARGO_HOME
-PATH=$CARGO_HOME/bin:$PATH
-### ruby
-export GEM_HOME=$HOME/installed-from-src/ruby/gems
-PATH=$GEM_HOME/bin:$PATH
-PATH=~/installed-from-src/ruby/current-version/bin:$PATH
-### my bin
-PATH=$HOME/bin:$PATH
+### add paths
+add_to_path "$HOME/go/go-1.18/bin"
+add_to_path "$CARGO_HOME/bin"
+add_to_path "$GEM_HOME/bin"
+add_to_path "$HOME/installed-from-src/ruby/current-version/bin"
+add_to_path "$HOME/installed-from-src/latex/texlive/2018/bin/x86_64-darwin"
+add_to_path "$HOME/bin"
 
 ## focus issue for iterm2: ^[[O^[[I
 alias focusfix='printf "\e[?1004l"'
@@ -147,6 +139,4 @@ export LESS="-i -R"
 
 # editor for crontab etc.
 export EDITOR=$HOME/bin/vim
-
-export PATH
 # vim: ft=sh tw=1000:
