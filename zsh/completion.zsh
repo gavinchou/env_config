@@ -151,5 +151,566 @@ _claude() {
 }
 compdef _claude claude
 
+_opencode() {
+  local -a subcommands
+  subcommands=(
+    'completion:Generate shell completion script'
+    'acp:Start ACP (Agent Client Protocol) server'
+    'mcp:Manage MCP (Model Context Protocol) servers'
+    'attach:Attach to a running opencode server'
+    'run:Run opencode with a message'
+    'debug:Debugging and troubleshooting tools'
+    'providers:Manage AI providers and credentials'
+    'agent:Manage agents'
+    'upgrade:Upgrade opencode to the latest or a specific version'
+    'uninstall:Uninstall opencode and remove all related files'
+    'serve:Start a headless opencode server'
+    'web:Start opencode server and open web interface'
+    'models:List all available models'
+    'stats:Show token usage and cost statistics'
+    'export:Export session data as JSON'
+    'import:Import session data from JSON file or URL'
+    'github:Manage GitHub agent'
+    'pr:Fetch and checkout a GitHub PR branch, then run opencode'
+    'session:Manage sessions'
+    'db:Database tools'
+  )
+
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "--port[Port to listen on]:port:" \
+    "--hostname[Hostname to listen on]:hostname:" \
+    "--mdns[Enable mDNS service discovery]" \
+    "--mdns-domain[Custom domain name for mDNS service]:domain:" \
+    "*--cors[Additional domains to allow for CORS]:domains:" \
+    "(-c --continue)"{-c,--continue}"[Continue the last session]" \
+    "(-s --session)"{-s,--session}"[Session id to continue]:session:" \
+    "--fork[Fork the session when continuing]" \
+    "--prompt[Prompt to use]:prompt:" \
+    "--agent[Agent to use]:agent:" \
+    "(-m --model)"{-m,--model}"[Model to use in format provider/model]:model:->model_provider:" \
+    "--dangerous[allow all commmand permissions]" \
+    "--dir[change cwd before running]:dir:_directories" \
+    "*:: :->subcommand_or_args" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+    model_provider)
+      # compadd "$@" bailian/glm-5 bailian/qwen3.5-plus bailian/kimi-2.5 bailian/MiniMax-M2.5
+      conf_json="$HOME/.config/opencode/opencode.json"
+      compadd "$@" $(ls ${conf_json} > /dev/null 2>&1 && sed 's|^\s*//.*||g' ${conf_json} | jq -r '.provider | to_entries[] | .key as $provider | .value.models | keys[] | "\($provider)/\(.)"')
+      ;;
+    subcommand_or_args)
+      if (( CURRENT >= 3 )) && [[ -n "${words[2]}" ]]; then
+        case "${words[2]}" in
+          mcp)
+            _opencode_mcp
+            ;;
+          providers)
+            _opencode_providers
+            ;;
+          agent)
+            _opencode_agent
+            ;;
+          session)
+            _opencode_session
+            ;;
+          debug)
+            _opencode_debug
+            ;;
+          github)
+            _opencode_github
+            ;;
+          db)
+            _opencode_db
+            ;;
+          run)
+            _opencode_run
+            ;;
+          attach)
+            _opencode_attach
+            ;;
+          upgrade)
+            _opencode_upgrade
+            ;;
+          stats)
+            _opencode_stats
+            ;;
+          uninstall)
+            _opencode_uninstall
+            ;;
+          models)
+            _opencode_models
+            ;;
+          export)
+            _opencode_export
+            ;;
+          import)
+            _opencode_import
+            ;;
+          pr)
+            _opencode_pr
+            ;;
+          serve|web|acp)
+            _opencode_server
+            ;;
+          *)
+            _describe 'command' subcommands
+            ;;
+        esac
+      else
+        _describe 'command' subcommands
+      fi
+      ;;
+  esac
+}
+
+_opencode_mcp() {
+  local -a subcommands
+  subcommands=(
+    'add:Add an MCP server'
+    'list:List MCP servers and their status'
+    'auth:Authenticate with an OAuth-enabled MCP server'
+    'logout:Remove OAuth credentials for an MCP server'
+    'debug:Debug OAuth connection for an MCP server'
+  )
+
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "*:: :->subcommand" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+    subcommand)
+      _describe 'command' subcommands
+      ;;
+  esac
+}
+
+_opencode_providers() {
+  local -a subcommands
+  subcommands=(
+    'list:List providers and credentials'
+    'login:Log in to a provider'
+    'logout:Log out from a configured provider'
+  )
+
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "*:: :->subcommand" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+    subcommand)
+      _describe 'command' subcommands
+      ;;
+  esac
+}
+
+_opencode_agent() {
+  local -a subcommands
+  subcommands=(
+    'create:Create a new agent'
+    'list:List all available agents'
+  )
+
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "*:: :->subcommand" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+    subcommand)
+      _describe 'command' subcommands
+      ;;
+  esac
+}
+
+_opencode_session() {
+  local -a subcommands
+  subcommands=(
+    'list:List sessions'
+    'delete:Delete a session'
+  )
+
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "*:: :->subcommand" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+    subcommand)
+      _describe 'command' subcommands
+      ;;
+  esac
+}
+
+_opencode_debug() {
+  local -a subcommands
+  subcommands=(
+    'config:Show resolved configuration'
+    'lsp:LSP debugging utilities'
+    'rg:Ripgrep debugging utilities'
+    'file:File system debugging utilities'
+    'scrap:List all known projects'
+    'skill:List all available skills'
+    'snapshot:Snapshot debugging utilities'
+    'agent:Show agent configuration details'
+    'paths:Show global paths'
+    'wait:Wait indefinitely for debugging'
+  )
+
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "*:: :->subcommand" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+    subcommand)
+      if (( CURRENT >= 4 )) && [[ "${words[2]}" == "debug" && -n "${words[3]}" ]]; then
+        case "${words[3]}" in
+          lsp)
+            local -a lsp_commands
+            lsp_commands=(
+              'diagnostics:Get diagnostics for a file'
+              'symbols:Search workspace symbols'
+              'document-symbols:Get symbols from a document'
+            )
+            _describe 'lsp command' lsp_commands
+            ;;
+          *)
+            _describe 'command' subcommands
+            ;;
+        esac
+      else
+        _describe 'command' subcommands
+      fi
+      ;;
+  esac
+}
+
+_opencode_github() {
+  local -a subcommands
+  subcommands=(
+    'install:Install the GitHub agent'
+    'run:Run the GitHub agent'
+  )
+
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "*:: :->subcommand" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+    subcommand)
+      _describe 'command' subcommands
+      ;;
+  esac
+}
+
+_opencode_db() {
+  local -a subcommands
+  subcommands=(
+    'path:Print the database path'
+    'migrate:Migrate JSON data to SQLite'
+  )
+
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "--format[Output format]:format:->format" \
+    "*:: :->subcommand" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+    format)
+      compadd "$@" json tsv
+      ;;
+    subcommand)
+      _describe 'command' subcommands
+      ;;
+  esac
+}
+
+_opencode_run() {
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "--command[The command to run]:command:" \
+    "(-c --continue)"{-c,--continue}"[Continue the last session]" \
+    "(-s --session)"{-s,--session}"[Session id to continue]:session:" \
+    "--fork[Fork the session before continuing]" \
+    "--share[Share the session]" \
+    "(-m --model)"{-m,--model}"[Model to use]:model:" \
+    "--agent[Agent to use]:agent:" \
+    "--format[Output format]:format:->format" \
+    "(-f --file)"{-f,--file}"[File(s) to attach to message]:file:_files" \
+    "--title[Title for the session]:title:" \
+    "--attach[Attach to a running opencode server]:url:" \
+    "(-p --password)"{-p,--password}"[Basic auth password]:password:" \
+    "--dir[Directory to run in]:dir:_directories" \
+    "--port[Port for the local server]:port:" \
+    "--variant[Model variant]:variant:" \
+    "--thinking[Show thinking blocks]" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+    format)
+      compadd "$@" default json
+      ;;
+  esac
+}
+
+_opencode_attach() {
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "--dir[Directory to run in]:dir:_directories" \
+    "(-c --continue)"{-c,--continue}"[Continue the last session]" \
+    "(-s --session)"{-s,--session}"[Session id to continue]:session:" \
+    "--fork[Fork the session when continuing]" \
+    "(-p --password)"{-p,--password}"[Basic auth password]:password:" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+  esac
+}
+
+_opencode_upgrade() {
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "(-m --method)"{-m,--method}"[Installation method]:method:->method" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+    method)
+      compadd "$@" curl npm pnpm bun brew choco scoop
+      ;;
+  esac
+}
+
+_opencode_stats() {
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "--days[Show stats for the last N days]:days:" \
+    "--tools[Number of tools to show]:tools:" \
+    "--models[Show model statistics]:models:" \
+    "--project[Filter by project]:project:" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+  esac
+}
+
+_opencode_uninstall() {
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "(-c --keep-config)"{-c,--keep-config}"[Keep configuration files]" \
+    "(-d --keep-data)"{-d,--keep-data}"[Keep session data and snapshots]" \
+    "--dry-run[Show what would be removed without removing]" \
+    "(-f --force)"{-f,--force}"[Skip confirmation prompts]" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+  esac
+}
+
+_opencode_models() {
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "--verbose[Use more verbose model output]" \
+    "--refresh[Refresh the models cache from models.dev]" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+  esac
+}
+
+_opencode_export() {
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+  esac
+}
+
+_opencode_import() {
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "1:file:_files" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+  esac
+}
+
+_opencode_pr() {
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "1:number:" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+  esac
+}
+
+_opencode_server() {
+  _arguments -C -s \
+    "(-h --help)"{-h,--help}"[Show help]" \
+    "(-v --version)"{-v,--version}"[Show version number]" \
+    "--print-logs[Print logs to stderr]" \
+    "--log-level[Log level]:level:->log_level" \
+    "--port[Port to listen on]:port:" \
+    "--hostname[Hostname to listen on]:hostname:" \
+    "--mdns[Enable mDNS service discovery]" \
+    "--mdns-domain[Custom domain name for mDNS service]:domain:" \
+    "*--cors[Additional domains to allow for CORS]:domains:" \
+    && return 0
+
+  case $state in
+    log_level)
+      compadd "$@" DEBUG INFO WARN ERROR
+      ;;
+  esac
+}
+
+compdef _opencode opencode
+compdef _opencode oc
+
+_oc_list() {
+    local -a cmds subcmds
+    cmds=(list prompts help)
+    if (( CURRENT == 2 )); then
+        _describe -t commands 'command' cmds
+        return
+    fi
+    case "$words[2]" in
+        list)
+            _arguments \
+                '-n+[Limit number of sessions]:number' \
+                '--limit=[Limit number of sessions]:number' \
+                '(-h --help)'{-h,--help}'[Show help]'
+            ;;
+        prompts)
+            if (( CURRENT == 3 )); then
+                local -a sessions
+                sessions=("${(@f)$(sqlite3 ~/.local/share/opencode/opencode.db "SELECT id || ':' || datetime(time_updated/1000,'unixepoch','localtime') || ' ' || title FROM session WHERE parent_id IS NULL OR parent_id = '' OR title NOT LIKE '%(@%subagent)' ORDER BY time_updated DESC LIMIT 50;")}")
+                _describe -t sessions 'session' sessions
+            else
+                _arguments \
+                    '-n+[Show last N prompts]:number' \
+                    '--last=[Show last N prompts]:number' \
+                    '(-h --help)'{-h,--help}'[Show help]'
+            fi
+            ;;
+        help)
+            if (( CURRENT == 3 )); then
+                _describe -t topics 'help topic' cmds
+            fi
+            ;;
+    esac
+}
+
+compdef _oc_list oc_list
 
 # vim: et ts=2 sw=2 tw=10086 ft=sh:
